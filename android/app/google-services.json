@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "891781283479",
+    "project_id": "shoppets-460fc",
+    "storage_bucket": "shoppets-460fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:891781283479:android:3ede92bbc50aa99dc333d2",
+        "android_client_info": {
+          "package_name": "com.shoppets"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEpbFAuQNxXRQv6l4ehEf8jjnb-2rdeBs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
