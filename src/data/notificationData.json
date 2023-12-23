@@ -1,0 +1,38 @@
+[
+    {
+        "notificationId": 1,
+        "notificationTitle": "Order Completed",
+        "notificationDescription": "Test notification 1",
+        "notificationSource": "Shimi Balili"
+    },
+    {
+        "notificationId": 2,
+        "notificationTitle": "Order Completed",
+        "notificationDescription": "Test notification 2",
+        "notificationSource": "Christian Mundal"
+    },
+    {
+        "notificationId": 3,
+        "notificationTitle": "Order Approved",
+        "notificationDescription": "Test notification 3",
+        "notificationSource": "Christian Mundal"
+    },
+    {
+        "notificationId": 4,
+        "notificationTitle": "Order Received",
+        "notificationDescription": "Test notification 4",
+        "notificationSource": "Christian Mundal"
+    },
+    {
+        "notificationId": 5,
+        "notificationTitle": "Order Cancelled",
+        "notificationDescription": "Test notification 5",
+        "notificationSource": "Christian Mundal"
+    },
+    {
+        "notificationId": 6,
+        "notificationTitle": "Order Place",
+        "notificationDescription": "Test notification 6",
+        "notificationSource": "Christian Mundal"
+    }
+]

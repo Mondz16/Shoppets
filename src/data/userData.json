@@ -1,0 +1,18 @@
+[
+    {
+        "userId": "2ZLIEKTOHXSyrawNXumnDyDo16e2",
+        "purchases": [
+            {
+                "petID": 1,
+                "petStatus": "Pending"
+            },
+            {
+                "petID": 2,
+                "petStatus": "Pending"
+            }
+        ],
+        "store":[
+
+        ]
+    }
+]

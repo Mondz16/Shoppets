@@ -3,8 +3,15 @@ import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 24,
-    fontWeight: '500',
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: 30,
+    color: '#000000',
+  },
+  subtitle: {
+    fontSize: 14,
+    color: 'rgba(0,0,0, .5)',
+    fontWeight: '400',
+    letterSpacing: 1,
   },
 });
 

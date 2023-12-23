@@ -30,6 +30,17 @@ import Notification from './Screen/app/Notification';
 import Welcome from './Screen/auth/Welcome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LogBox } from 'react-native';
+import PetDetails from './Screen/app/PetDetails';
+import SignUpConfirmCode from './Screen/auth/SignUpConfirmCode';
+import Cart from './Screen/app/Cart';
+import AllCategories from './Screen/app/AllCategories';
+import SearchPet from './Screen/app/SearchPet';
+import AddToStore from './Screen/app/AddToStore';
+import PetOrderDetails from './Screen/app/PetOrderDetails';
+import SellerPetDetails from './Screen/app/SellerPetDetails';
+import SellerEditPetDetails from './Screen/app/SellerEditPetDetails';
+import Wishlist from './Screen/app/Wishlist';
+import HelpCenter from './Screen/app/HelpCenter';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -82,7 +93,7 @@ const Routes = () => {
   }
 
   if (user) {
-    console.log(`User Signed in with ${user.email}`);
+    console.log(`User Signed in with ${user.email} | id: ${user.uid}`);
   }
 
   function MainApp() {
@@ -159,16 +170,16 @@ const Routes = () => {
           }}
         />
         <Tab.Screen
-          name="Profile"
-          component={Profile}
+          name="Cart"
+          component={Cart}
           options={{
             tabBarIcon: ({focused}) => (
               <Image
                 style={styles.tabIcon}
                 source={
                   focused
-                    ? require('./assets/user_active.png')
-                    : require('./assets/user_inactive.png')
+                    ? require('./assets/cart_active.png')
+                    : require('./assets/cart_inactive.png')
                 }
               />
             ),
@@ -210,8 +221,52 @@ const Routes = () => {
         component={PostResetPassword}
       />
       <Stack.Screen
+        name="SignUpConfirmCode"
+        component={SignUpConfirmCode}
+      />
+      <Stack.Screen
         name="PostSignUp"
         component={PostSignUp}
+      />
+      <Stack.Screen
+        name="PetDetails"
+        component={PetDetails}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+      />
+      <Stack.Screen
+        name="AllCategories"
+        component={AllCategories}
+      />
+      <Stack.Screen
+        name="SearchPet"
+        component={SearchPet}
+      />
+      <Stack.Screen
+        name="AddToStore"
+        component={AddToStore}
+      />
+      <Stack.Screen
+        name="PetOrderDetails"
+        component={PetOrderDetails}
+      />
+      <Stack.Screen
+        name="SellerPetDetails"
+        component={SellerPetDetails}
+      />
+      <Stack.Screen
+        name="SellerEditPetDetails"
+        component={SellerEditPetDetails}
+      />
+      <Stack.Screen
+        name="Wishlist"
+        component={Wishlist}
+      />
+      <Stack.Screen
+        name="HelpCenter"
+        component={HelpCenter}
       />
     </Stack.Navigator>
   );

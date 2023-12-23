@@ -3,6 +3,21 @@ import {StyleSheet} from 'react-native';
 import colors from '../../../constant/color';
 
 const styles = StyleSheet.create({
+  mainContainer:{
+    padding: 10,
+  },
+  topContainer: {
+    width: '100%',
+    height: 75,
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+  },
+  topIcon: {
+    width: 175,
+    height: 50,
+    marginLeft: 50,
+  },
   container: {
     height: '100%',
     alignItems: 'center',
@@ -82,6 +97,25 @@ const styles = StyleSheet.create({
     color: colors.red,
     fontWeight: '300',
     textAlign: 'center',
+  },
+  header:{
+    fontSize: 24,
+    marginBottom: 5,
+    fontFamily: 'Poppins-SemiBold',
+    paddingLeft: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.darkGrey,
+    textAlign: 'center',
+  },
+  showAllButton:{
+    color: colors.darkGrey2,
+    fontSize: 13,
+    fontFamily: 'Poppins-Regular',
+    fontWeight: 'normal',
+  },
+  showButton:{
+    borderTopWidth: 1,
+    borderTopColor: colors.darkGrey,
   },
 });
 

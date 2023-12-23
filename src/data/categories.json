@@ -1,0 +1,26 @@
+[
+    {
+        "categoryName": "Dog",
+        "categoryIcon": "https://images.pexels.com/photos/17926688/pexels-photo-17926688/free-photo-of-close-up-of-dog-head.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    },
+    {
+        "categoryName": "Cat",
+        "categoryIcon": "https://images.unsplash.com/photo-1677030960206-249628309d11?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE4fHx8ZW58MHx8fHx8&w=1000&q=80"
+    },
+    {
+        "categoryName": "Rabbit",
+        "categoryIcon": "https://us.123rf.com/450wm/pixander/pixander2305/pixander230536075/204639007-close-up-portrait-of-a-cute-red-rabbit-in-the-garden.jpg?ver=6"
+    },
+    {
+        "categoryName": "Bird",
+        "categoryIcon": "https://images.pexels.com/photos/9546127/pexels-photo-9546127.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    },
+    {
+        "categoryName": "Chicken",
+        "categoryIcon": "https://b2293868.smushcdn.com/2293868/wp-content/uploads/pexels-photo-92000-1024x683.jpeg?lossy=1&strip=1&webp=1"
+    },
+    {
+        "categoryName": "Fish",
+        "categoryIcon": "https://www.thesprucepets.com/thmb/Jg5byuBdix-TXtyLk4Xn575K3GE=/6078x0/filters:no_upscale():strip_icc()/low-maintenance-freshwater-fish-4770223-hero-ffb66c229c194e2db4916e88bbd17a15.jpg"
+    }
+]

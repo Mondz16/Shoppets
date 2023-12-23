@@ -1,0 +1,337 @@
+[
+    {
+        "id": 1,
+        "sellerImage": "https://www.wilsoncenter.org/sites/default/files/media/images/person/james-person-1.jpg",
+        "sellerName": "John Doe",
+        "sellerAddress": "123 Main St, Anytown",
+        "sellerContactNumber": "1234567890",
+        "sellerRating": "4.5",
+        "petName": "Max",
+        "petStatus": "Pending",
+        "petBreed": "Labrador Retriever",
+        "petGender": "Male",
+        "petAge": "1 year",
+        "petWeight": "25kg",
+        "petDescription": "Friendly and playful Labrador Retriever.",
+        "location": "Anytown",
+        "price": "8000",
+        "category": "Dog",
+        "petImage": [
+            "https://static.vecteezy.com/system/resources/previews/005/857/332/non_2x/funny-portrait-of-cute-corgi-dog-outdoors-free-photo.jpg",    
+            "https://www.vets4pets.com/siteassets/species/dog/close-up-of-dog.jpg?width=1040",
+            "https://www.science.org/do/10.1126/science.aab2491/full/bonding_16x9-1644945505710.jpg"
+        ],
+        "petVaccination": [
+            {
+                "vaccineName": "rabies",
+                "vaccinationWeekGap": 3,
+                "vaccinationDate": [
+                    "11-21-2023"
+                ]
+            },
+            {
+                "vaccineName": "7-in-1",
+                "vaccinationWeekGap": 3,
+                "vaccinationDate": [
+                    "11-21-2023"
+                ]
+            }
+        ],
+        "petVaccinationCard": "",
+        "coordinates": {
+            "lat": 40.7128,
+            "lon": -74.0060
+        }
+    },
+    {
+        "id": 2,
+        "sellerImage": "https://www.wilsoncenter.org/sites/default/files/media/images/person/james-person-1.jpg",
+        "sellerName": "Alice Smith",
+        "sellerAddress": "456 Oak St, Springfield",
+        "sellerContactNumber": "9876543210",
+        "sellerRating": "4.2",
+        "petName": "Whiskers",
+        "petStatus": "Pending",
+        "petBreed": "Persian",
+        "petGender": "Female",
+        "petAge": "3 years",
+        "petWeight": "4kg",
+        "petDescription": "Calm and elegant Persian cat.",
+        "location": "Springfield",
+        "price": "5000",
+        "category": "Cat",
+        "petImage": [
+            "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQgThawZ4ZfKfmWodN_4kKnMDUVFYlkzUMkjRsHWaa9efYaiCMO",
+            "https://www.thesprucepets.com/thmb/1Q3ZQVxADUQ2Aam4mhSS8FzqKP4=/2164x0/filters:no_upscale():strip_icc()/GettyImages-904624038-8a3d9763601742258dd48df05e1ce69f.jpg",
+            "https://www.omlet.us/images/cache/1024/682/Cat-Persian_Self-A_white_Persian_with_the_long_fluffy_coat_they_are_famous_for.jpg"
+        ],
+        "petVaccination": [
+            {
+                "vaccineName": "feline-leukemia",
+                "vaccinationWeekGap": 2,
+                "vaccinationDate": [
+                    "11-22-2023"
+                ]
+            },
+            {
+                "vaccineName": "rabies",
+                "vaccinationWeekGap": 2,
+                "vaccinationDate": [
+                    "11-22-2023"
+                ]
+            }
+        ],
+        "petVaccinationCard": "",
+        "coordinates": {
+            "lat": 39.7684,
+            "lon": -86.1581
+        }
+    },
+    {
+        "id": 3,
+        "sellerImage": "https://www.wilsoncenter.org/sites/default/files/media/images/person/james-person-1.jpg",
+        "sellerName": "Emma Johnson",
+        "sellerAddress": "789 Pine St, Lakeside",
+        "sellerContactNumber": "5551234567",
+        "sellerRating": "4.7",
+        "petName": "Snowball",
+        "petStatus": "Pending",
+        "petBreed": "Angora",
+        "petGender": "Male",
+        "petAge": "2 years",
+        "petWeight": "3kg",
+        "petDescription": "Fluffy and affectionate Angora cat.",
+        "location": "Lakeside",
+        "price": "4500",
+        "category": "Cat",
+        "petImage": [
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Turkish_Angora_in_Ankara_Zoo_%28AO%C3%87%29.JPG/640px-Turkish_Angora_in_Ankara_Zoo_%28AO%C3%87%29.JPG",
+            "https://petkeen.com/wp-content/uploads/2022/03/white-turkish-angora_TheCats_Shutterstock-760x507.jpg",
+            "https://www.animalfunfacts.net/images/stories/pets/cats/turkish_angora_sweet_l.jpg"
+        ],
+        "petVaccination": [
+            {
+                "vaccineName": "feline-leukemia",
+                "vaccinationWeekGap": 2,
+                "vaccinationDate": [
+                    "11-23-2023"
+                ]
+            },
+            {
+                "vaccineName": "rabies",
+                "vaccinationWeekGap": 2,
+                "vaccinationDate": [
+                    "11-23-2023"
+                ]
+            }
+        ],
+        "petVaccinationCard": "",
+        "coordinates": {
+            "lat": 36.7783,
+            "lon": -119.4179
+        }
+    },
+    {
+        "id": 4,
+        "sellerImage": "https://www.wilsoncenter.org/sites/default/files/media/images/person/james-person-1.jpg",
+        "sellerName": "Michael Rodriguez",
+        "sellerAddress": "321 Maple Ave, Meadowville",
+        "sellerContactNumber": "9998765432",
+        "sellerRating": "4.9",
+        "petName": "Fluffy",
+        "petStatus": "Pending",
+        "petBreed": "Rabbit",
+        "petGender": "Female",
+        "petAge": "1.5 years",
+        "petWeight": "2kg",
+        "petDescription": "Adorable and cuddly rabbit.",
+        "location": "Meadowville",
+        "price": "1500",
+        "category": "Rabbit",
+        "petImage": [
+            "https://hips.hearstapps.com/hmg-prod/images/rabbit-breeds-american-white-1553635287.jpg?crop=0.976xw:0.651xh;0.0242xw,0.291xh&resize=980:*",
+            "https://media.graphassets.com/resize=height:360,width:1280/output=format:webp/6HMliklR42YbaPaq76Ld?width=1280",
+            "https://render.fineartamerica.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/2/rabbit-studioradina.jpg"
+        ],
+        "petVaccination": [],
+        "petVaccinationCard": "",
+        "coordinates": {
+            "lat": 41.8781,
+            "lon": -87.6298
+        }
+    },
+    {
+        "id": 5,
+        "sellerImage": "https://www.wilsoncenter.org/sites/default/files/media/images/person/james-person-1.jpg",
+        "sellerName": "Olivia Taylor",
+        "sellerAddress": "567 Cedar Lane, Woodville",
+        "sellerContactNumber": "3334445555",
+        "sellerRating": "4.6",
+        "petName": "Sky",
+        "petStatus": "Pending",
+        "petBreed": "Parakeet",
+        "petGender": "Male",
+        "petAge": "1.5 years",
+        "petWeight": "50g",
+        "petDescription": "Colorful and talkative parakeet.",
+        "location": "Woodville",
+        "price": "200",
+        "category": "Bird",
+        "petImage": [
+            "data:image/jpeg;base64,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",
+            "https://nybswholesale.com/cdn/shop/products/parakeets-992092_38cf30aa-136e-4bdd-9f34-8a2b0cd87785_x700.jpg?v=1679585575",
+            "https://cdn.create.vista.com/api/media/small/395230472/stock-photo-close-budgerigar-parakee-isolated-white-background"
+        ],
+        "petVaccination": [],
+        "petVaccinationCard": "",
+        "coordinates": {
+            "lat": 37.7749,
+            "lon": -122.4194
+        }
+    },
+    {
+        "id": 6,
+        "sellerImage": "https://www.wilsoncenter.org/sites/default/files/media/images/person/james-person-1.jpg",
+        "sellerName": "William Anderson",
+        "sellerAddress": "876 Pinecrest Drive, Hillside",
+        "sellerContactNumber": "7778889999",
+        "sellerRating": "4.2",
+        "petName": "Cluckers",
+        "petStatus": "Pending",
+        "petBreed": "Silkie Chicken",
+        "petGender": "Female",
+        "petAge": "1 year",
+        "petWeight": "1.5kg",
+        "petDescription": "Fluffy and friendly Silkie Chicken.",
+        "location": "Hillside",
+        "price": "1000",
+        "category": "Chicken",
+        "petImage": [
+            "https://upload.wikimedia.org/wikipedia/commons/e/e2/Silky_bantam.jpg",
+            "https://images.saymedia-content.com/.image/t_share/MTc0MzI0NDAyMzg3NjkwODU2/silkie_chickens.jpg",
+            "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTc0MzI0NDAyMzg3NjkwODU2/silkie_chickens.jpg"
+        ],
+        "petVaccination": [],
+        "petVaccinationCard": "",
+        "coordinates": {
+            "lat": 41.8787,
+            "lon": -87.9288
+        }
+    },
+    {
+        "id": 7,
+        "sellerImage": "https://www.wilsoncenter.org/sites/default/files/media/images/person/james-person-1.jpg",
+        "sellerName": "Sophia Hernandez",
+        "sellerAddress": "234 Oakwood Street, Riverside",
+        "sellerContactNumber": "1112223333",
+        "sellerRating": "4.8",
+        "petName": "Bubbles",
+        "petStatus": "Pending",
+        "petBreed": "Goldfish",
+        "petGender": "Unspecified",
+        "petAge": "6 months",
+        "petWeight": "20g",
+        "petDescription": "Beautiful and graceful goldfish.",
+        "location": "Riverside",
+        "price": "50",
+        "category": "Fish",
+        "petImage": [
+            "https://image.petmd.com/files/styles/978x550/public/goldfish-swimmingtoward_285011336_0.jpg",
+            "https://www.hugglepets.co.uk/wp-content/uploads/2017/06/goldfish.jpg",
+            "https://th-thumbnailer.cdn-si-edu.com/WVhFXb6fgOQWVXWeGfiiCZYO5Og=/fit-in/1600x0/https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer/bf/4e/bf4ec3eb-669f-4a1d-87ad-dd83f81c384d/4694899147_fcd4b69350_o.jpg"
+        ],
+        "petVaccination": [],
+        "petVaccinationCard": "",
+        "coordinates": {
+            "lat": 33.9806,
+            "lon": -117.3755
+        }
+    },
+    {
+        "id": 8,
+        "sellerImage": "https://www.wilsoncenter.org/sites/default/files/media/images/person/james-person-1.jpg",
+        "sellerName": "Ethan Miller",
+        "sellerAddress": "789 Elm Street, Lakeshore",
+        "sellerContactNumber": "4445556666",
+        "sellerRating": "4.5",
+        "petName": "Flame",
+        "petStatus": "Pending",
+        "petBreed": "Siamese Fighting Fish",
+        "petGender": "Male",
+        "petAge": "1 year",
+        "petWeight": "15g",
+        "petDescription": "Vibrant and energetic Siamese Fighting Fish.",
+        "location": "Lakeshore",
+        "price": "30",
+        "category": "Fish",
+        "petImage": [
+            "https://www.thesprucepets.com/thmb/7YGQUU_FYAd2XCNmnW_9_jKcDZU=/5762x0/filters:no_upscale():strip_icc()/siamese-fighting-fish-bettas-1378308-hero-f459084da1414308accde7e21001906c.jpg",
+            "https://www.thesprucepets.com/thmb/swH3SZruvDp-op7EGWxUQ8v9ZuI=/3000x0/filters:no_upscale():strip_icc()/siamese-fighting-fish-bettas-1378308-01-0d167136bf9540a6a7e54a464b942595.jpg",
+            "https://www.aquaholicsonline.com.au/assets/full/LF-assorted_betta6cm.jpg?20210309033317"
+        ],
+        "petVaccination": [],
+        "petVaccinationCard": "",
+        "coordinates": {
+            "lat": 42.1275,
+            "lon": -87.829
+        }
+    },
+    {
+        "id": 9,
+        "sellerImage": "https://www.wilsoncenter.org/sites/default/files/media/images/person/james-person-1.jpg",
+        "sellerName": "Ava Brown",
+        "sellerAddress": "543 Pinecrest Avenue, Meadowside",
+        "sellerContactNumber": "7776665555",
+        "sellerRating": "4.3",
+        "petName": "Nibbles",
+        "petStatus": "Pending",
+        "petBreed": "Dwarf Rabbit",
+        "petGender": "Male",
+        "petAge": "6 months",
+        "petWeight": "1kg",
+        "petDescription": "Cute and playful Dwarf Rabbit.",
+        "location": "Meadowside",
+        "price": "1200",
+        "category": "Rabbit",
+        "petImage": [
+            "https://image.petmd.com/files/styles/863x625/public/2023-08/netherland.dwarf_.jpg",
+            "https://a-z-animals.com/media/2022/02/shutterstock_1629470266.jpg",
+            "https://a-z-animals.com/media/2022/03/shutterstock_1489950722.jpg"
+        ],
+        "petVaccination": [],
+        "petVaccinationCard": "",
+        "coordinates": {
+            "lat": 40.7128,
+            "lon": -74.0060
+        }
+    },
+    {
+        "id": 10,
+        "sellerImage": "https://www.wilsoncenter.org/sites/default/files/media/images/person/james-person-1.jpg",
+        "sellerName": "Liam Davis",
+        "sellerAddress": "876 Maple Drive, Hilltop",
+        "sellerContactNumber": "3334445555",
+        "sellerRating": "4.6",
+        "petName": "Splash",
+        "petStatus": "Pending",
+        "petBreed": "Betta Fish",
+        "petGender": "Female",
+        "petAge": "8 months",
+        "petWeight": "25g",
+        "petDescription": "Elegant and vibrant Betta Fish.",
+        "location": "Hilltop",
+        "price": "25",
+        "category": "Fish",
+        "petImage": [
+            "https://image.petmd.com/files/styles/978x550/public/2023-04/red.betta_.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWKjLF815dByRJ0S_bFJuaCYjMvjkc3clDYgRI3uuUEaCQbg_z4NfuzUSHyEbMdx4s3aw&usqp=CAU",
+            "https://i.pinimg.com/736x/93/19/9e/93199e556488b0337a3ae8d4fd7f55a0.jpg"
+        ],
+        "petVaccination": [],
+        "petVaccinationCard": "",
+        "coordinates": {
+            "lat": 37.7749,
+            "lon": -122.4194
+        }
+    }
+]

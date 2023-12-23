@@ -17,23 +17,23 @@ const Welcome = ({navigation}) => {
         alignItems: 'flex-end',
         paddingBottom: 40,
       }}
-      prevButton={(<Text style={styles.buttonText} />	)}
-      nextButton={(
+      prevButton={<Text style={styles.buttonText} />}
+      nextButton={
         <Button
-                clickable={false}
-                title={'Next'}
-                buttonStyle={{
-                  width: 170,
-                  borderRadius: 10,
-                  }}
-                withBorder={true}
-              />
-      )}
+          clickable={false}
+          title={'Next'}
+          buttonStyle={{
+            width: 170,
+            borderRadius: 10,
+          }}
+          withBorder={true}
+          onPress={() => navigation.navigate('Login', {navigation})}
+        />
+      }
       loop={false}
       paginationStyle={styles.paginationStyle}
       dotStyle={styles.dotStyle}
-      activeDotStyle={styles.activeDotStyle}
-      >
+      activeDotStyle={styles.activeDotStyle}>
       <LinearGradient
         style={styles.container}
         colors={[colors.darkBlue, colors.green]}
@@ -74,6 +74,7 @@ const Welcome = ({navigation}) => {
               }}
               style={{color: colors.black}}
               withBorder={false}
+              onPress={() => navigation.navigate('Login', {navigation})}
             />
           </View>
         </View>
@@ -148,9 +149,7 @@ const Welcome = ({navigation}) => {
             ]}>
             SHOPETS!
           </Text>
-          <Text style={styles.text}>
-            Where Pets and People Connect.
-          </Text>
+          <Text style={styles.text}>Where Pets and People Connect.</Text>
           <View style={styles.buttonContainer}>
             <Button
               title={'Skip'}

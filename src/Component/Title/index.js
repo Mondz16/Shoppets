@@ -3,9 +3,9 @@ import React from 'react';
 import {Text} from 'react-native';
 import styles from './style';
 
-const Title = ({title , style}) => {
+const Title = ({title , style , isTitle}) => {
   return (
-      <Text style={[styles.title, style]}>{title}</Text>
+    <Text style={[isTitle ? styles.title : styles.subtitle, style]}>{title}</Text>
   );
 };
 

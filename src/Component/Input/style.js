@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     width: 25,
   },
   inputField: {
-    height: 40,
+    height: '100%',
     color: colors.black,
     letterSpacing: 1,
     width: '100%',

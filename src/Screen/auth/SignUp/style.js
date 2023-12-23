@@ -19,9 +19,9 @@ const styles = StyleSheet.create({
     width: '90%',
     backgroundColor: colors.lighBlue,
     padding: 30,
-    paddingTop: 10,
+    paddingTop: 0,
     borderRadius: 15,
-    marginTop: 120,
+    marginTop: 30,
     marginBottom: 30,
   },
   icon: {
@@ -31,10 +31,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   image: {
-    width: 300,
-    height: 300,
-    marginTop: -229,
-    alignItems: 'center',
+    width: 200,
+    height: 200,
+    marginTop: -145,
+    alignSelf: 'center',
   },
   label: {
     width: '100%',
