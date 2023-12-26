@@ -5,7 +5,7 @@ import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import styles from './style';
 
-const SellerPetCard = ({ petImage, petName, location, gender, breed , onPress }) => {
+const SellerPetCard = ({ petImage, petName, location, gender, breed , onPress, showIcon }) => {
     return (
       <TouchableOpacity onPress={onPress} style={styles.container}>
         <Image style={styles.petImage} source={{uri: petImage}} />
@@ -13,12 +13,15 @@ const SellerPetCard = ({ petImage, petName, location, gender, breed , onPress })
           <View style={styles.descriptionHolder}>
             <Text style={styles.petName}>{petName}</Text>
           </View>
-          <TouchableOpacity style={styles.favHolder}>
+          {
+            showIcon ? (
+            <TouchableOpacity style={styles.favHolder}>
             <Image
               style={styles.favIcon}
               source={require('../../assets/edit.png')}
             />
-          </TouchableOpacity>
+            </TouchableOpacity>) : null
+          }
         </View>
 
         <Text style={styles.genderAge}>
@@ -33,6 +36,10 @@ const SellerPetCard = ({ petImage, petName, location, gender, breed , onPress })
         </View>
       </TouchableOpacity>
     );
+};
+
+SellerPetCard.defaultProps = {
+  showIcon: true,
 };
 
 export default React.memo(SellerPetCard);

@@ -5,6 +5,7 @@ import colors from '../../../constant/color';
 const styles = StyleSheet.create({
   mainContainer:{
     padding: 10,
+    alignItems: 'center',
   },
   topContainer: {
     width: '100%',
@@ -103,7 +104,6 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontFamily: 'Poppins-SemiBold',
     paddingLeft: 10,
-    borderBottomWidth: 1,
     borderBottomColor: colors.darkGrey,
     textAlign: 'center',
   },

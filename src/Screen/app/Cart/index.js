@@ -37,6 +37,7 @@ const Cart = ({navigation}) => {
   });
 
   useEffect(() => {
+    getImagesFromFirebaseStorage();
     const unsubscribe = listenUserDateFromFirestore();
 
     return () => {
@@ -44,7 +45,21 @@ const Cart = ({navigation}) => {
     };
   }, []);
 
+  async function getImagesFromFirebaseStorage(){
+    const userData = await firestore()
+      .collection('PetCollection')
+      .doc('UserData')
+      .collection(auth().currentUser.uid)
+      .doc('Info').get();
 
+    var existingData = JSON.parse(userData.data().infoData);
+    console.log('user data >>', userData.data().infoData);
+
+    const fileName = auth().currentUser.uid;
+    await storage().ref(fileName + '/' + existingData.profile_image).getDownloadURL().then(x => {
+      setImage(x);
+    });
+  }
 
   async function listenUserDateFromFirestore() {
     const id = auth().currentUser.uid;
@@ -166,7 +181,7 @@ const Cart = ({navigation}) => {
                     navigation.navigate('PetDetails', {navigation, item})
                   }
                   onCheckout={() =>
-                    navigation.navigate('PetDetails', {navigation, item})
+                    navigation.navigate('PetOrderDetails', {navigation, item})
                   }
                 />
               );

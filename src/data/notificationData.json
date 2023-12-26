@@ -2,37 +2,19 @@
     {
         "notificationId": 1,
         "notificationTitle": "Order Completed",
-        "notificationDescription": "Test notification 1",
-        "notificationSource": "Shimi Balili"
+        "notificationDescription": "The order has been completed!",
+        "notificationSource": "Christian Mundal"
     },
     {
         "notificationId": 2,
-        "notificationTitle": "Order Completed",
-        "notificationDescription": "Test notification 2",
+        "notificationTitle": "Order Delivered",
+        "notificationDescription": "Your order has been delivered!",
         "notificationSource": "Christian Mundal"
     },
     {
         "notificationId": 3,
-        "notificationTitle": "Order Approved",
-        "notificationDescription": "Test notification 3",
-        "notificationSource": "Christian Mundal"
-    },
-    {
-        "notificationId": 4,
-        "notificationTitle": "Order Received",
-        "notificationDescription": "Test notification 4",
-        "notificationSource": "Christian Mundal"
-    },
-    {
-        "notificationId": 5,
-        "notificationTitle": "Order Cancelled",
-        "notificationDescription": "Test notification 5",
-        "notificationSource": "Christian Mundal"
-    },
-    {
-        "notificationId": 6,
-        "notificationTitle": "Order Place",
-        "notificationDescription": "Test notification 6",
+        "notificationTitle": "Order Shipping",
+        "notificationDescription": "Your order is now shipping!",
         "notificationSource": "Christian Mundal"
     }
 ]

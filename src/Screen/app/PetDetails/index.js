@@ -34,6 +34,7 @@ const PetDetails = ({navigation, route}) => {
   const {item} = route?.params || {};
   const [image, setImage] = useState();
   const [sellerImage, setSellerImage] = useState();
+  const [sellerData, setSellerData] = useState();
 
   const [connectionStatus, setConnectionStatus] = useState(true);
   const [cartModalVisible, setCartModalVisible] = useState(false);
@@ -57,6 +58,7 @@ const PetDetails = ({navigation, route}) => {
 
   useEffect(() => {
     getFirestoreCartlistData();
+    getFirestoreSenderData();
   }, []);
 
   async function getImagesFromFirebaseStorage(){
@@ -88,6 +90,22 @@ const PetDetails = ({navigation, route}) => {
         let jsonObj = JSON.parse(cart.data().list);
         setCartlist(jsonObj);
         setCartExists(cartlist?.find(x => x === item.id) !== null);
+      }
+      else {
+        setCartlist([]);
+      }
+    });
+  }
+
+  async function getFirestoreSenderData() {
+    await firestore()
+    .collection('PetCollection')
+    .doc('UserData')
+    .collection(item.sellerId)
+    .doc('Info').onSnapshot(cart => {
+      if (cart.data() !== undefined && cart.data().infoData !== null  && cart.data().infoData !== undefined){
+        let jsonObj = JSON.parse(cart.data().infoData);
+        setSellerData(jsonObj);
       }
       else {
         setCartlist([]);
@@ -232,6 +250,11 @@ const PetDetails = ({navigation, route}) => {
           sellerName={item.sellerName}
           rate={item.sellerRating}
           onMedicalPress={() => setMedicalModalVisible(true)}
+          onChatPress={() => navigation.navigate('Chat', {
+            sellerId: item.sellerId,
+            sellerData: sellerData,
+            navigation: navigation,
+          })}
         />
 
         <Text style={styles.description}>{item.petDescription}</Text>
@@ -272,7 +295,9 @@ const PetDetails = ({navigation, route}) => {
           title={'Buy Now'}
           withBorder={true}
           clickable={true}
-          onPress={() => setPurchaseModalVisible(true)}
+          onPress={() => {
+            navigation.navigate('PetOrderDetails', {navigation , item});
+          }}
         />
       </View>
     </SafeAreaView>

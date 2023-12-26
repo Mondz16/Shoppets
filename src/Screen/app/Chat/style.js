@@ -2,7 +2,7 @@
 import {StyleSheet, Dimensions} from 'react-native';
 import colors from '../../../constant/color';
 
-const {width} = Dimensions.get('window');
+const {width , height} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -31,16 +31,93 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 20,
   },
+  chatContainer:{
+    height: height - 75,
+  },
+  deliveryHolder:{
+    width: 300,
+    padding: 10,
+    margin: 10,
+    borderRadius: 15,
+    backgroundColor: colors.grey,
+    alignSelf: 'flex-start',
+  },
+  deliveryHolder2:{
+    width: 300,
+    padding: 10,
+    margin: 10,
+    borderRadius: 15,
+    backgroundColor: colors.lighBlue,
+    alignSelf: 'flex-end',
+  },
+  deliveryText:{
+    fontFamily: 'Poppins-Regular',
+    fontSize: 16,
+    textAlign: 'left',
+  },
+  deliveryTextHeader:{
+    fontFamily: 'Poppins-Regular',
+    fontSize: 14,
+    color: colors.darkGrey2,
+    textAlign: 'left',
+  },
+  deliveryText2:{
+    fontFamily: 'Poppins-Regular',
+    fontSize: 16,
+    textAlign: 'right',
+  },
+  deliveryTextHeader2:{
+    fontFamily: 'Poppins-Regular',
+    fontSize: 14,
+    color: colors.darkGrey2,
+    textAlign: 'right',
+  },
   topText: {
     fontFamily: 'Poppins-SemiBold',
     fontSize: 25,
-    letterSpacing: 1,
+    letterSpacing: 3,
     color: colors.white,
     width: 175,
     height: 50,
     marginTop: 7,
     marginLeft: 50,
     textAlign: 'center',
+    textAlignVertical: 'center',
+  },
+  topHeader:{
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    justifyContent: 'space-evenly',
+    borderBottomWidth: 1,
+    borderBottomColor: colors.darkGrey,
+  },
+  chatFooter:{
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    justifyContent: 'space-evenly',
+    borderTopWidth: 1,
+    borderTopColor: colors.darkGrey,
+  },
+  sellerImage:{
+    borderRadius: 50, width: 50, height: 50,
+  },
+  callIcon:{
+    width: 30, height: 30,
+  },
+  sellerNameText: {
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: 27,
+    color: colors.black,
+    width: 250,
+    height: 50,
+    marginTop: 7,
+    marginHorizontal: 10,
+    textAlign: 'start',
     textAlignVertical: 'center',
   },
   topButton: {
@@ -87,40 +164,10 @@ const styles = StyleSheet.create({
   sliderWrapper: {
     borderRadius: 7.5,
   },
-  bannerHolder: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  deliveryHolder:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    marginBottom: 15,
-    borderRadius: 10,
-  },
-  deliveryTextHolder:{
-    justifyContent: 'center',
-    alignItems: 'left',
-    marginLeft: 10,
-  },
-  bannerTextHolder:{
-    justifyContent: 'center',
-    alignItems: 'left',
-    marginLeft: 10,
-  },
   banner: {
-    height: 125,
-    width: 125,
+    height: 280,
     borderWidth: 1,
     borderRadius: 10,
-  },
-  deliveryIcon: {
-    height: 40,
-    width: 40,
-    marginTop: -60,
-    marginLeft: -100,
   },
   paginationStyle: {
     justifyContent: 'center',
@@ -174,83 +221,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: 15,
     justifyContent: 'space-between',
-  },
-  statusHolder:{
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-  },
-  footer:{
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    flexDirection: 'row',
-    width: '100%',
-    paddingHorizontal: 10,
-    position: 'absolute',
-    bottom: 0,
-    backgroundColor: colors.white,
-
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.39,
-    shadowRadius: 8.30,
-
-    elevation: 13,
-  },
-  footerText:{
-    alignItems: 'flex-end',
-    marginRight: 15,
-  },
-  footerHeader:{
-    fontFamily: 'Poppins-Regular',
-    fontSize: 15,
-    marginVertical: -3,
-    color: colors.darkGrey2,
-  },
-  footerTotal:{
-    fontFamily: 'Poppins-SemiBold',
-    fontSize: 17,
-    marginVertical: -3,
-    color: colors.darkGreen,
-  },
-  status:{
-    fontFamily: 'Poppins-Regular',
-    fontSize: 15,
-    marginLeft: 5,
-    color: colors.darkGreen,
-  },
-  statusLabel:{
-    fontFamily: 'Poppins-Regular',
-    fontSize: 15,
-  },
-  paymentDetails:{
-    fontFamily: 'Poppins-SemiBold',
-    fontSize: 15,
-  },
-  dropdown:{
-    width: 170,
-    marginLeft: 50,
-  },
-  petDetail:{
-    fontFamily: 'Poppins-Regular',
-    fontSize: 15,
-    marginVertical: -2,
-  },
-  deliveryTextHeader:{
-    fontFamily: 'Poppins-SemiBold',
-    fontSize: 15,
-  },
-  deliveryText:{
-    fontFamily: 'Poppins-Regular',
-    fontSize: 14,
-  },
-  deliverySubtitleText:{
-    fontFamily: 'Poppins-Regular',
-    fontSize: 13,
-    color: colors.darkGrey2,
   },
 });
 

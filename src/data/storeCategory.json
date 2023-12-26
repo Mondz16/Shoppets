@@ -1,8 +1,7 @@
 [
     "Available",
-    "Orders",
     "Pending",
+    "Shipping",
     "Delivered",
-    "Completed",
-    "Cancelled"
+    "Completed"
 ]

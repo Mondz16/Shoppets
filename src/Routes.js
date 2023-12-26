@@ -41,6 +41,13 @@ import SellerPetDetails from './Screen/app/SellerPetDetails';
 import SellerEditPetDetails from './Screen/app/SellerEditPetDetails';
 import Wishlist from './Screen/app/Wishlist';
 import HelpCenter from './Screen/app/HelpCenter';
+import ProfileAboutApp from './Screen/app/ProfileAboutApp';
+import ProfileTermsAndPolicy from './Screen/app/ProfileTermsAndPolicy';
+import ProfilePrivacyPolicy from './Screen/app/ProfilePrivacyPolicy';
+import ProfileResetPassword from './Screen/app/ProfileResetPassword';
+import SellerPetOrderDetails from './Screen/app/SellerPetOrderDetails';
+import ProfileBankGcash from './Screen/app/ProfileBankGcash';
+import Chat from './Screen/app/Chat';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -267,6 +274,34 @@ const Routes = () => {
       <Stack.Screen
         name="HelpCenter"
         component={HelpCenter}
+      />
+      <Stack.Screen
+        name="ProfileAboutApp"
+        component={ProfileAboutApp}
+      />
+      <Stack.Screen
+        name="ProfileTermsAndPolicy"
+        component={ProfileTermsAndPolicy}
+      />
+      <Stack.Screen
+        name="ProfilePrivacyPolicy"
+        component={ProfilePrivacyPolicy}
+      />
+      <Stack.Screen
+        name="ProfileResetPassword"
+        component={ProfileResetPassword}
+      />
+      <Stack.Screen
+        name="SellerPetOrderDetails"
+        component={SellerPetOrderDetails}
+      />
+      <Stack.Screen
+        name="ProfileBankGcash"
+        component={ProfileBankGcash}
+      />
+      <Stack.Screen
+        name="Chat"
+        component={Chat}
       />
     </Stack.Navigator>
   );

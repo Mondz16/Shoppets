@@ -15,7 +15,7 @@ const OrderCard = ({icon, buttonText, name, breed, location, status, onPress}) =
       colors={[colors.lighBlue, colors.white]}
       start={{x: 0, y: 0}}
       end={{x: 0, y: 1}}>
-      <Image source={icon} style={styles.profile} />
+      <Image source={{uri: icon}} style={styles.profile} />
       <View>
         <View style={styles.petInfoContainer}>
           <View style={styles.infoHolder}>

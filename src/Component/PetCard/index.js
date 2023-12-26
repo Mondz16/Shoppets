@@ -13,7 +13,7 @@ const PetCard = ({ petId, petImage, petName, location, gender, breed , onPress }
     const [wishlist , setWishlist] = useState([]);
     const [wishExists , setWishExists] = useState(false);
 
-    const id = auth().currentUser.uid;
+    const id = auth().currentUser?.uid;
 
     useEffect(() => {
       getFirestoreWishlistData();

@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {useState, useEffect} from 'react';
-import {Image, Pressable, Text, View} from 'react-native';
+import {Image, Alert, Share, Pressable, Text, View} from 'react-native';
 import styles from './style';
 import Button from '../../../Component/Button';
 import auth from '@react-native-firebase/auth';
@@ -72,6 +72,26 @@ const ProfileImage = ({navigation}) => {
     });
   }
 
+  const onShare = async () => {
+      try {
+        const result = await Share.share({
+          message:
+            'React Native | A framework for building native apps using React',
+        });
+        if (result.action === Share.sharedAction) {
+          if (result.activityType) {
+            // shared with activity type of result.activityType
+          } else {
+            // shared
+          }
+        } else if (result.action === Share.dismissedAction) {
+          // dismissed
+        }
+      } catch (error) {
+        Alert.alert(error.message);
+      }
+    };
+
   return (
     <SafeAreaView>
       <InternetStatusModal isVisible={!connectionStatus} />
@@ -105,24 +125,17 @@ const ProfileImage = ({navigation}) => {
         </View>
         <View>
           <Pressable style={styles.modalButtonHolder} onPress={() => {
-              navigation.navigate('Profile',{navigation});
+              navigation.navigate('ProfileResetPassword',{navigation});
             }}>
               <Image style={styles.modalIcon} source={require('../../../assets/profile-user.png')} />
-              <Text style={styles.modalText}>Account and Security</Text>
+              <Text style={styles.modalText}>Reset Password</Text>
               <Image style={styles.modalIcon} source={require('../../../assets/rightArrow.png')} />
             </Pressable>
           <Pressable style={styles.modalButtonHolder} onPress={() => {
-              navigation.navigate('Profile',{navigation});
-            }}>
-              <Image style={styles.modalIcon} source={require('../../../assets/locationWithBorder.png')} />
-              <Text style={styles.modalText}>My Addressess</Text>
-              <Image style={styles.modalIcon} source={require('../../../assets/rightArrow.png')} />
-            </Pressable>
-          <Pressable style={styles.modalButtonHolder} onPress={() => {
-              navigation.navigate('Profile',{navigation});
+              navigation.navigate('ProfileBankGcash',{navigation , userData});
             }}>
               <Image style={styles.modalIcon} source={require('../../../assets/bank.png')} />
-              <Text style={styles.modalText}>Bank Accounts/Card</Text>
+              <Text style={styles.modalText}>Bank Accounts/Gcash</Text>
               <Image style={styles.modalIcon} source={require('../../../assets/rightArrow.png')} />
             </Pressable>
         </View>
@@ -131,29 +144,27 @@ const ProfileImage = ({navigation}) => {
         </View>
         <View>
           <Pressable style={styles.modalButtonHolder} onPress={() => {
-              navigation.navigate('Profile',{navigation});
+              navigation.navigate('ProfileAboutApp',{navigation});
             }}>
               <Image style={styles.modalIcon} source={require('../../../assets/phone.png')} />
               <Text style={styles.modalText}>About App</Text>
               <Image style={styles.modalIcon} source={require('../../../assets/rightArrow.png')} />
             </Pressable>
           <Pressable style={styles.modalButtonHolder} onPress={() => {
-              navigation.navigate('Profile',{navigation});
+              navigation.navigate('ProfileTermsAndPolicy',{navigation});
             }}>
               <Image style={styles.modalIcon} source={require('../../../assets/paper.png')} />
               <Text style={styles.modalText}>Terms & Conditions</Text>
               <Image style={styles.modalIcon} source={require('../../../assets/rightArrow.png')} />
             </Pressable>
           <Pressable style={styles.modalButtonHolder} onPress={() => {
-              navigation.navigate('Profile',{navigation});
+              navigation.navigate('ProfilePrivacyPolicy',{navigation});
             }}>
               <Image style={styles.modalIcon} source={require('../../../assets/privacy-policy.png')} />
               <Text style={styles.modalText}>Privacy Policy</Text>
               <Image style={styles.modalIcon} source={require('../../../assets/rightArrow.png')} />
             </Pressable>
-          <Pressable style={styles.modalButtonHolder} onPress={() => {
-              navigation.navigate('Profile',{navigation});
-            }}>
+          <Pressable style={styles.modalButtonHolder} onPress={onShare}>
               <Image style={styles.modalIcon} source={require('../../../assets/share.png')} />
               <Text style={styles.modalText}>Share This App</Text>
               <Image style={styles.modalIcon} source={require('../../../assets/rightArrow.png')} />

@@ -15,6 +15,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import NetInfo from '@react-native-community/netinfo';
 import InternetStatusModal from '../../../Component/InternetStatusModal';
+import storage from '@react-native-firebase/storage';
 
 const AllCategories = ({navigation}) => {
   var RNFS = require('react-native-fs');
@@ -24,6 +25,7 @@ const AllCategories = ({navigation}) => {
   const [categoriesData, setCategoriesData] = useState([]);
   const [petData, setPetData] = useState();
   const [connectionStatus, setConnectionStatus] = useState(true);
+  const [images, setImages] = useState([]);
 
   const user = auth().currentUser;
   const path = `${RNFS.DocumentDirectoryPath}/data.txt`;
@@ -39,7 +41,6 @@ const AllCategories = ({navigation}) => {
 
   // retrieves the file from the local data or firestore
   useEffect(() => {
-    getFile();
     setCategoriesData(categories);
     getFirestoreData();
   }, []);
@@ -49,6 +50,7 @@ const AllCategories = ({navigation}) => {
       item?.category.includes(selectedCategory),
     );
     setData(filteredData);
+    getImagesURL();
   },[petData]);
 
   useEffect(() => {
@@ -58,30 +60,56 @@ const AllCategories = ({navigation}) => {
       item?.category.includes(selectedCategory),
     );
     setData(filteredData);
+    getImagesURL();
   }, [selectedCategory]);
 
   async function getFirestoreData() {
-    const petCollection = await firestore()
-      .collection('PetCollection')
-      .doc('PetData')
-      .get();
-
-      saveFile(petCollection.data().data);
-  }
-
-  async function saveFile(firestoreData){
     try {
-      await RNFS.writeFile(path, firestoreData, 'utf8');
-    } catch (e) {
-      console.log('saveFile error', e);
+      const docRef = firestore().collection('PetCollection').doc('PetData');
+
+      // Subscribe to snapshot changes and get an unsubscribe function
+      const unsubscribe = docRef.onSnapshot(snapshot => {
+        if (snapshot.exists && snapshot.data().data !== undefined) {
+          const jsonObj = JSON.parse(snapshot.data().data);
+          setPetData(jsonObj);
+          getImagesURL();
+        }
+      });
+
+      return () => unsubscribe(); // Return the unsubscribe function
+    } catch (error) {
+      console.error('Error fetching data from Firestore:', error);
     }
   }
 
-  async function getFile() {
-    const file = await RNFS.readFile(path);
-    const jsonObj = JSON.parse(file);
-    console.log('file >>', file);
-    setPetData(jsonObj);
+  async function getImagesURL() {
+    try {
+      const imagePromises = petData.map(pet =>
+        getPetImagesFromFirebaseStorage(pet.id, pet.petImage),
+      );
+
+      // Wait for all promises to resolve
+      const imagesData = await Promise.all(imagePromises);
+
+      // Update the state with all images at once
+      setImages(imagesData);
+
+      console.log('All Images Data >>', imagesData);
+    } catch (error) {
+      console.error('Error fetching pet images from storage:', error);
+      // Handle the error, maybe set an error state or log it
+    }
+  }
+
+  async function getPetImagesFromFirebaseStorage(petId, petImage) {
+    try {
+      const imageUrl = await storage().ref(petImage).getDownloadURL();
+      return {id: petId, imgUrl: imageUrl};
+    } catch (error) {
+      console.error('Error fetching pet image from storage:', error);
+      // Handle the error, maybe set an error state or log it
+      return null; // Or some default value indicating an error
+    }
   }
 
   return (
@@ -134,19 +162,29 @@ const AllCategories = ({navigation}) => {
           </View>
         }
         keyExtractor={item => String(item?.id)}
-        renderItem={({item, index}) => (
-          <PetCard
-            key={item.id}
-            petImage={item.petImage?.length ? item.petImage[0] : null}
-            petName={item.petName}
-            location={item.location}
-            gender={item.petGender}
-            age={item.petAge}
-            onPress={() =>
-              navigation.navigate('PetDetails', {navigation, item})
-            }
-          />
-        )}
+        renderItem={({item, index}) => {
+          let petImage =
+            images.length > 1 ? images.find(x => x.id === item.id) : images;
+
+          let navigateDirectory =
+            item.sellerId === auth().currentUser?.uid
+              ? 'SellerPetDetails'
+              : 'PetDetails';
+          console.log('Item Found >> ', item);
+          return (
+            <PetCard
+              key={item.id}
+              petId={item.id}
+              petImage={petImage ? petImage.imgUrl : null}
+              petName={item.petName}
+              location={item.location}
+              breed={item.petBreed}
+              onPress={() =>
+                navigation.navigate(navigateDirectory, {navigation, item})
+              }
+            />
+          );
+        }}
       />
     </View>
   );

@@ -41,7 +41,7 @@ const Sell = ({navigation}) => {
   const [categoriesData, setCategoriesData] = useState([]);
   const [userData, setUserData] = useState();
   const [petData, setPetData] = useState();
-  const [images, setImages] = useState();
+  const [images, setImages] = useState([]);
   const [profileImage, setProfileImage] = useState(null);
   const [connectionStatus, setConnectionStatus] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
@@ -58,15 +58,36 @@ const Sell = ({navigation}) => {
     };
   });
 
-  useEffect(() => {
-  });
-
   // retrieves the file from the local data or firestore
   useEffect(() => {
     setCategoriesData(storeCategories);
     getUserDataFromFirestore();
     listenUserDateFromFirestore();
   }, []);
+
+  useEffect(() => {
+    setSelectedCategory('Available');
+
+    const filteredData = petData?.filter(item =>
+        item?.petStatus.includes(selectedCategory),
+      );
+      setData(filteredData);
+      getImagesURL();
+  }, [petData]);
+
+  useEffect(() => {
+    if (!petData) {
+      return;
+    }
+
+    const filteredData = petData?.filter(item =>
+        item?.petStatus.includes(selectedCategory),
+      );
+      setData(filteredData);
+      getImagesURL();
+
+    console.log('Data >>', JSON.stringify(data));
+  }, [selectedCategory]);
 
   async function listenUserDateFromFirestore() {
     const id = user.uid;
@@ -116,52 +137,37 @@ const Sell = ({navigation}) => {
       });
   }
 
-  useEffect(() => {
-    setSelectedCategory('Available');
-    getImagesURL();
-  }, [petData]);
-
-  useEffect(() => {
-    if (!petData) {
-      return;
-    }
-
-    const filteredData = petData?.filter(item =>
-        item?.petStatus.includes(selectedCategory),
-      );
-      setData(filteredData);
-
-    console.log('Data >>', JSON.stringify(data));
-  }, [selectedCategory]);
-
   let dataArray = [];
 
-  const getImagesURL = async () => {
-    const imagePromises = petData.map(pet =>
-      getPetImagesFromFirebaseStorage(pet.petImage),
-    );
-    Promise.all(imagePromises)
-      .then(img => {
-        setImages(img);
-        console.log('Images found >', img);
-      })
-      .catch(error => {
-        console.error('Error fetching pet images:', error);
-      });
-  };
-
-  async function getPetImagesFromFirebaseStorage(petImage) {
+  async function getImagesURL() {
     try {
-      const imageUrl = await storage().ref(petImage).getDownloadURL();
-      console.log('Image Data >>', imageUrl);
-      return imageUrl;
+      const imagePromises = petData.map((pet) =>
+        getPetImagesFromFirebaseStorage(pet.id, pet.petImage)
+      );
+
+      // Wait for all promises to resolve
+      const imagesData = await Promise.all(imagePromises);
+
+      // Update the state with all images at once
+      setImages(imagesData);
+
+      console.log('All Images Data >>', imagesData);
     } catch (error) {
-      console.error('Error fetching pet image from storage:', error);
+      console.error('Error fetching pet images from storage:', error);
       // Handle the error, maybe set an error state or log it
-      return null;
     }
   }
 
+  async function getPetImagesFromFirebaseStorage(petId, petImage) {
+    try {
+      const imageUrl = await storage().ref(petImage).getDownloadURL();
+      return { id: petId, imgUrl: imageUrl };
+    } catch (error) {
+      console.error('Error fetching pet image from storage:', error);
+      // Handle the error, maybe set an error state or log it
+      return null; // Or some default value indicating an error
+    }
+  }
   async function getFirestoreData() {
     const id = user.uid;
     const petData = await firestore()
@@ -227,20 +233,25 @@ const Sell = ({navigation}) => {
         }
         keyExtractor={item => String(item?.id)}
         renderItem={({item, index}) => {
-          let petImage = images[index];
-          if (index > 0) {
-            petImage = images[images.length - index];
-          }
+          console.log('Images >>', images);
+          let petImage = images.length > 1 ? images.find(x => x.id !== null && x.id === item.id && item.id !== null) : images;
+
+          let navigateDirectory =
+            item.petStatus === 'Available'
+              ? 'SellerPetDetails'
+              : 'SellerPetOrderDetails';
+
           return (
             <SellerPetCard
               key={item.id}
-              petImage={petImage}
+              petImage={petImage ? petImage.imgUrl : null}
               petName={item.petName}
               location={item.location}
               gender={item.petGender}
               breed={item.petBreed}
+              showIcon={item.petStatus === 'Available'}
               onPress={() =>
-                navigation.navigate('SellerPetDetails', {navigation, item})
+                navigation.navigate(navigateDirectory, {navigation, item})
               }
             />
           );

@@ -17,7 +17,7 @@ import NetInfo from '@react-native-community/netinfo';
 import InternetStatusModal from '../../../Component/InternetStatusModal';
 import AccountModal from '../../../Component/AccountModal';
 import storage from '@react-native-firebase/storage';
-import { launchImageLibrary} from 'react-native-image-picker';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 const Home = ({navigation}) => {
   var RNFS = require('react-native-fs');
@@ -35,7 +35,8 @@ const Home = ({navigation}) => {
   const path = `${RNFS.DocumentDirectoryPath}/data.txt`;
 
   useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener((state) => {
+    getImagesFromFirebaseStorage();
+    const unsubscribe = NetInfo.addEventListener(state => {
       setConnectionStatus(state.isConnected);
     });
     return () => {
@@ -45,28 +46,30 @@ const Home = ({navigation}) => {
 
   useEffect(() => {
     setCategoriesData(categories);
-
-    getImagesFromFirebaseStorage();
-    const unsubscribe = getFirestoreData();
-
-    return () => {
-      unsubscribe();
-    };
+    getFirestoreData();
   }, []);
 
+  useEffect(() => {
+    setSelectedCategory('Dog');
+    const filteredData = petData?.filter(item => {
+      return (
+        item?.category.includes(selectedCategory) &&
+        item?.petStatus === 'Available'
+      );
+    });
+    setData(filteredData);
+    getImagesURL();
+  }, [petData]);
 
   useEffect(() => {
-    const filteredData = petData?.filter(item =>
-      item?.category.includes(selectedCategory),
-    );
+    const filteredData = petData?.filter(item =>{
+      return (
+        item?.category.includes(selectedCategory) &&
+        item?.petStatus === 'Available'
+      );
+    });
     setData(filteredData);
-  },[petData]);
-
-  useEffect(() => {
-    const filteredData = petData?.filter(item =>
-      item?.category.includes(selectedCategory),
-    );
-    setData(filteredData);
+    getImagesURL();
   }, [selectedCategory]);
 
   async function getFirestoreData() {
@@ -77,15 +80,8 @@ const Home = ({navigation}) => {
       const unsubscribe = docRef.onSnapshot(snapshot => {
         if (snapshot.exists && snapshot.data().data !== undefined) {
           const jsonObj = JSON.parse(snapshot.data().data);
-
-          // Use Promise.all to concurrently fetch pet images
-          const imagePromises = jsonObj.map(pet => getPetImagesFromFirebaseStorage(pet.petImage));
-          Promise.all(imagePromises).then(images => {
-            setPetData(jsonObj);
-            setImages(images);
-          }).catch(error => {
-            console.error('Error fetching pet images:', error);
-          });
+          setPetData(jsonObj);
+          getImagesURL();
         }
       });
 
@@ -95,49 +91,53 @@ const Home = ({navigation}) => {
     }
   }
 
-  async function getImagesFromFirebaseStorage(){
-    try {
-      const docRef = firestore().collection('PetCollection').doc('UserData').collection(user.uid)
-      .doc('Info');
+  async function getImagesFromFirebaseStorage() {
+    const userData = await firestore()
+      .collection('PetCollection')
+      .doc('UserData')
+      .collection(auth().currentUser.uid)
+      .doc('Info')
+      .get();
 
-      // Subscribe to snapshot changes and get an unsubscribe function
-      docRef.onSnapshot(snapshot => {
-        if (snapshot.exists && snapshot.data().infoData !== undefined) {
-          const jsonObj = JSON.parse(snapshot.data().infoData);
+    var existingData = JSON.parse(userData.data().infoData);
+    console.log('user data >>', userData.data().infoData);
 
-          console.log('Profile Picture Updated!');
-          getProfilePictureFromFirebaseStorage(
-              user.uid + '/' + jsonObj.profile_image
-            );
-        }
+    const fileName = auth().currentUser.uid;
+    await storage()
+      .ref(fileName + '/' + existingData.profile_image)
+      .getDownloadURL()
+      .then(x => {
+        setImage(x);
       });
-
-    } catch (error) {
-      console.error('Error fetching data from Firestore:', error);
-      return null;
-    }
   }
 
-  async function getProfilePictureFromFirebaseStorage(profileImage) {
+  async function getImagesURL() {
     try {
-      const imageUrl = await storage().ref(profileImage).getDownloadURL();
-      setImage(imageUrl);
+      const imagePromises = petData.map(pet =>
+        getPetImagesFromFirebaseStorage(pet.id, pet.petImage),
+      );
+
+      // Wait for all promises to resolve
+      const imagesData = await Promise.all(imagePromises);
+
+      // Update the state with all images at once
+      setImages(imagesData);
+
+      console.log('All Images Data >>', imagesData);
     } catch (error) {
-      console.error('Error fetching pet image from storage:', error);
+      console.error('Error fetching pet images from storage:', error);
       // Handle the error, maybe set an error state or log it
-      setImage(null);
     }
   }
 
-  async function getPetImagesFromFirebaseStorage(petImage) {
+  async function getPetImagesFromFirebaseStorage(petId, petImage) {
     try {
       const imageUrl = await storage().ref(petImage).getDownloadURL();
-      console.log('Image Data >>', imageUrl);
-      return imageUrl;
+      return {id: petId, imgUrl: imageUrl};
     } catch (error) {
       console.error('Error fetching pet image from storage:', error);
       // Handle the error, maybe set an error state or log it
-      return null;
+      return null; // Or some default value indicating an error
     }
   }
 
@@ -151,9 +151,14 @@ const Home = ({navigation}) => {
   return (
     <View>
       <InternetStatusModal isVisible={!connectionStatus} />
-      <AccountModal profileImage={image} navigation={navigation} visible={modalVisible} onRequestClose={() => {
+      <AccountModal
+        profileImage={image}
+        navigation={navigation}
+        visible={modalVisible}
+        onRequestClose={() => {
           setModalVisible(false);
-        }} />
+        }}
+      />
       <FlatList
         data={data}
         numColumns={2}
@@ -172,7 +177,11 @@ const Home = ({navigation}) => {
               end={{x: 1, y: 0}}>
               <ClickableIcon
                 iconStyle={{borderRadius: 50}}
-                icon={image === null ? require('../../../assets/account.png') : {uri : image}}
+                icon={
+                  image === null
+                    ? require('../../../assets/account.png')
+                    : {uri: image}
+                }
                 onPress={() => setModalVisible(true)}
               />
               <Image
@@ -244,25 +253,28 @@ const Home = ({navigation}) => {
         }
         keyExtractor={item => String(item?.id)}
         renderItem={({item, index}) => {
-          let petImage = images[index];
-          if (index > 0)
-            {petImage = images[images.length - index];}
+          let petImage =
+            images.length > 1 ? images.find(x => x.id === item.id) : images;
 
-          let navigateDirectory = item.sellerId === auth().currentUser.uid ? 'SellerPetDetails' : 'PetDetails';
+          let navigateDirectory =
+            item.sellerId === auth().currentUser?.uid
+              ? 'SellerPetDetails'
+              : 'PetDetails';
+          console.log('Item Found >> ', item);
           return (
-          <PetCard
-            key={item.id}
-            petId={item.id}
-            petImage={petImage}
-            petName={item.petName}
-            location={item.location}
-            breed={item.petBreed}
-            onPress={() =>
-                navigation.navigate(navigateDirectory, {navigation, item}
-              )
-            }
-          />
-        );}}
+            <PetCard
+              key={item.id}
+              petId={item.id}
+              petImage={petImage ? petImage.imgUrl : null}
+              petName={item.petName}
+              location={item.location}
+              breed={item.petBreed}
+              onPress={() =>
+                navigation.navigate(navigateDirectory, {navigation, item})
+              }
+            />
+          );
+        }}
       />
     </View>
   );

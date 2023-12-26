@@ -30,7 +30,7 @@ const {width} = Dimensions.get('window');
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 
-const PetOrderDetails = ({navigation, route}) => {
+const SellerPetOrderDetails = ({navigation, route}) => {
   const {item} = route?.params || {};
 
   const [connectionStatus, setConnectionStatus] = useState(true);
@@ -42,8 +42,6 @@ const PetOrderDetails = ({navigation, route}) => {
   const [purchaseModalVisible, setPurchaseModalVisible] = useState(false);
   const [buyerData, setBuyerData] = useState({});
   const [headerText , setHeaderText] = useState('');
-  const [modalTitle , setModalTitle] = useState('');
-  const [modalDescription , setModalDescription] = useState('');
   const [values, setValues] = useState({
     id: 1,
     sellerImage: '',
@@ -100,14 +98,11 @@ const PetOrderDetails = ({navigation, route}) => {
       if (item.buyerData.status === 'To Ship'){
         setHeaderText('Shipment');
       }
-      else if (item.buyerData.status === 'To Pay'){
-        setHeaderText('Payment');
-      }
       else if (item.buyerData.status === 'To Receive'){
         setHeaderText('Shipping');
       }
-      else if (item.buyerData.status === 'To Rate' ){
-        setHeaderText('Complete');
+      else if (item.buyerData.status === 'To Pay'){
+        setHeaderText('Payment');
       }
     }
 
@@ -133,43 +128,20 @@ const PetOrderDetails = ({navigation, route}) => {
     onChange(item.petImage, 'petImage');
     onChange(item.petVaccination, 'petVaccination');
     onChange(item.petVaccinationCard, 'petVaccinationCard');
-    if (item.petStatus === 'Available')
-      {onChange('Pending', 'petStatus');}
-    else if (item.petStatus === 'Delivering'){
-      onChange('Delivering', 'petStatus');
-    }
-    else {
-      onChange('Completed', 'petStatus');
-    }
-    if (item.buyerData === '')
-      {setCategoryValue('Cash on Delivery');}
-    else
-      {setCategoryValue(item.buyerData.paymentOption);}
-  }, []);
 
-  useEffect(() => {
-    let status = '';
-    if (item.buyerData.status === undefined || item.buyerData.status === null)
-      {status = categoryValue === 'Cash on Delivery' ? 'To Ship' : 'To Pay';}
-    else {
-      if (item.buyerData.status === 'To Receive'){
-        status = 'To Rate';
-      }
-      else if (item.buyerData.status === 'To Pay'){
-        status = 'To Ship';
-      }
-    }
-    let paymentAmount = categoryValue === 'Cash on Delivery' ? Number(item.price) + 120 : item.buyerData.payment;
+    let status = item.petStatus === 'Pending' ? 'Shipping' : 'Completed';
+    let buyerStatus = item.buyerData.status === 'To Receive' ? 'To Rate' : 'To Receive';
+    onChange(status, 'petStatus');
     onChange(
       {
-        buyerId: id,
-        status: status,
-        payment: paymentAmount,
-        paymentOption: categoryValue,
+        buyerId: item.buyerData.buyerId,
+        status: buyerStatus,
+        payment: item.buyerData.payment,
+        paymentOption: item.buyerData.paymentOption,
       },
       'buyerData',
     );
-  }, [categoryValue]);
+  }, []);
 
   const onChange = (value, key) => {
     setValues(vals => ({
@@ -259,12 +231,12 @@ const PetOrderDetails = ({navigation, route}) => {
       />
       <SingleButtonModal
         icon={require('../../../assets/orders_active.png')}
-        title={modalTitle}
-        description={modalDescription}
+        title={'Order Shipped!'}
+        description={'Please prepare your pet for pickup, the delivery truck will be there soon.'}
         visible={purchaseModalVisible}
         onRequestClose={() => {
           setPurchaseModalVisible(!purchaseModalVisible);
-          navigation.navigate('Home', navigation);
+          navigation.navigate('Sell', navigation);
         }}
       />
       <MedicalModal
@@ -313,12 +285,6 @@ const PetOrderDetails = ({navigation, route}) => {
           </View>
           <Image style={styles.banner} source={{uri: image}} />
         </View>
-        <InfoCard
-          profile={sellerImage}
-          sellerName={item.sellerName}
-          rate={item.sellerRating}
-          onMedicalPress={() => setMedicalModalVisible(true)}
-        />
         <LinearGradient
           style={[
             styles.deliveryHolder,
@@ -360,19 +326,22 @@ const PetOrderDetails = ({navigation, route}) => {
             },
           ]}>
           <Text style={styles.paymentDetails}>Payment Options</Text>
-          <DropDownPicker
-            open={openCategory}
-            value={categoryValue}
-            items={categoryItems}
-            setOpen={setOpenCategory}
-            setValue={setCategoryValue}
-            setItems={setCategoryItems}
-            style={styles.dropdown}
-            showArrowIcon={false}
-            dropDownContainerStyle={styles.dropdownContainer}
-            dropDownDirection="TOP"
-            onChangeValue={value => setCategoryValue(value)}
-          />
+          <Text style={styles.statusLabel}>{item.buyerData.paymentOption}</Text>
+          </View>
+        <View
+          style={[
+            styles.deliveryHolder,
+            {
+              paddingHorizontal: 5,
+              paddingVertical: 0,
+              paddingBottom: 10,
+              borderBottomWidth: 1,
+              borderColor: colors.lighBlue,
+            },
+          ]}>
+          <Text style={styles.paymentDetails}>Payment Status</Text>
+          <Text style={styles.statusLabel}>{Number(item.buyerData.payment) === 0 ? 'Unpaid' : (Number(item.buyerData.payment) === Number(item.price) + 120 ? ('Fully Paid') : ('Partially Paid'))}</Text>
+
         </View>
         <View>
           <Text style={styles.paymentDetails}>Payment Details</Text>
@@ -385,106 +354,59 @@ const PetOrderDetails = ({navigation, route}) => {
             <Text style={styles.status}>P 120.00</Text>
           </View>
           <View style={styles.statusHolder}>
+            <Text style={styles.statusLabel}>Paid Amount:</Text>
+            <Text style={styles.status}>(P {Number(item.buyerData.payment)}.00)</Text>
+          </View>
+          <View style={styles.statusHolder}>
             <Text style={styles.statusLabel}>Total Payment:</Text>
-            <Text style={styles.status}>P {Number(item.price) + 120}.00</Text>
+            <Text style={styles.status}>P {(Number(item.price) + 120) - Number(item.buyerData.payment)}.00</Text>
           </View>
         </View>
       </View>
       <View style={styles.footer}>
-        {item.buyerData !== '' && item.buyerData.status !== undefined ? (
+        {
           item.buyerData.status === 'To Ship' ? (
             <>
               <GradientButton
                 buttonStyle={{
                   width: width - 30,
                 }}
-                title={'Contact Seller'}
+                title={'Ship Order'}
                 withBorder={true}
                 clickable={true}
+                onPress={UpdatePetDataInfo}
               />
             </>
           ) : (
-            item.buyerData.status === 'To Receive' ?
+            item.buyerData.status === 'To Receive' ? (
             <>
               <GradientButton
                 buttonStyle={{
                   width: width - 30,
                 }}
-                title={'Order Received'}
+                title={'Delivering Order'}
                 withBorder={true}
                 clickable={true}
-                onPress={() => {
-                  setModalTitle('Order Received!');
-                  setModalDescription('Thank you for confirming that you have received your order!');
-                  UpdatePetDataInfo();
-                  }}
               />
             </>
-            : (
-            item.buyerData.status === 'To Rate' ?
+            ) : (
             <>
               <GradientButton
                 buttonStyle={{
                   width: width - 30,
                 }}
-                title={'Rate Now'}
+                title={'Complete Order'}
                 withBorder={true}
                 clickable={true}
-                onPress={() => {
-                  setModalTitle('Payment Successful!');
-                  setModalDescription('You have paid your order! The seller will ship your order right away.');
-                  UpdatePetDataInfo();
-                  }}
+                onPress={UpdatePetDataInfo}
               />
-            </> :
-            <>
-              <View style={styles.footerText}>
-                <Text style={styles.footerHeader}>Total Payment</Text>
-                <Text style={styles.footerTotal}>
-                  P {Number(item.price) + 120}.00
-                </Text>
-              </View>
-              <GradientButton
-                buttonStyle={{
-                  width: width / 2 - 30,
-                }}
-                title={'Pay Now'}
-                withBorder={true}
-                clickable={true}
-                onPress={() => {
-                  setModalTitle('Payment Successful!');
-                  setModalDescription('You have paid your order! The seller will ship your order right away.');
-                  UpdatePetDataInfo();
-                  }}
-              />
-            </>)
+            </>
+            )
           )
-        ) : (
-          <>
-            <View style={styles.footerText}>
-              <Text style={styles.footerHeader}>Total Payment</Text>
-              <Text style={styles.footerTotal}>
-                P {Number(item.price) + 120}.00
-              </Text>
-            </View>
-            <GradientButton
-              buttonStyle={{
-                width: width / 2 - 30,
-              }}
-              title={'Place Order'}
-              withBorder={true}
-              clickable={true}
-                onPress={() => {
-                  setModalTitle('Order Placed!');
-                  setModalDescription('You have placed an order. You can now see the pet in the order section.');
-                  UpdatePetDataInfo();
-                  }}
-            />
-          </>
-        )}
+          }
       </View>
     </SafeAreaView>
   );
 };
 
-export default React.memo(PetOrderDetails);
+export default React.memo(SellerPetOrderDetails);

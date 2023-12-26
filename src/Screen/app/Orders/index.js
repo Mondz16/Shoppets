@@ -18,6 +18,8 @@ import PetModal from '../../../Component/PetModal';
 import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import Categories from '../../../Component/Categories';
+import orderCategory from '../../../data/orderCategory.json';
 
 const Orders = ({navigation}) => {
 
@@ -26,6 +28,10 @@ const Orders = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [image, setImage] = useState(null);
   const [data, setData] = useState([]);
+  const [petData, setPetData] = useState();
+  const [images, setImages] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('To Pay');
+  const [categoriesData, setCategoriesData] = useState([]);
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -37,9 +43,34 @@ const Orders = ({navigation}) => {
   });
 
   useEffect(() => {
-    setData(petData);
+    setCategoriesData(orderCategory);
+    setSelectedCategory('To Pay');
+    getFirestoreData();
     getImagesFromFirebaseStorage();
   }, []);
+
+  useEffect(() => {
+    setSelectedCategory('To Pay');
+    const filteredData = petData?.filter(item => {
+      let buyerData = item.buyerData;
+      return buyerData.status === selectedCategory && buyerData.buyerId === auth().currentUser.uid;
+    }
+    );
+    setData(filteredData);
+    getImagesURL();
+  }, [petData]);
+
+  useEffect(() => {
+    console.log('Pet Data>>' , petData);
+    const filteredData = petData?.filter(item => {
+      let buyerData = item.buyerData;
+      return buyerData.status === selectedCategory && buyerData.buyerId === auth().currentUser.uid;
+    }
+    );
+    setData(filteredData);
+    getImagesURL();
+  }, [selectedCategory]);
+
 
   async function getImagesFromFirebaseStorage(){
     const userData = await firestore()
@@ -55,6 +86,55 @@ const Orders = ({navigation}) => {
     await storage().ref(fileName + '/' + existingData.profile_image).getDownloadURL().then(x => {
       setImage(x);
     });
+  }
+
+  async function getFirestoreData() {
+    try {
+      const docRef = firestore().collection('PetCollection').doc('PetData');
+
+      // Subscribe to snapshot changes and get an unsubscribe function
+      const unsubscribe = docRef.onSnapshot(snapshot => {
+        if (snapshot.exists && snapshot.data().data !== undefined) {
+          const jsonObj = JSON.parse(snapshot.data().data);
+          setPetData(jsonObj);
+          getImagesURL();
+        }
+      });
+
+      return () => unsubscribe(); // Return the unsubscribe function
+    } catch (error) {
+      console.error('Error fetching data from Firestore:', error);
+    }
+  }
+
+  async function getImagesURL() {
+    try {
+      const imagePromises = petData.map((pet) =>
+        getPetImagesFromFirebaseStorage(pet.id, pet.petImage)
+      );
+
+      // Wait for all promises to resolve
+      const imagesData = await Promise.all(imagePromises);
+
+      // Update the state with all images at once
+      setImages(imagesData);
+
+      console.log('All Images Data >>', imagesData);
+    } catch (error) {
+      console.error('Error fetching pet images from storage:', error);
+      // Handle the error, maybe set an error state or log it
+    }
+  }
+
+  async function getPetImagesFromFirebaseStorage(petId, petImage) {
+    try {
+      const imageUrl = await storage().ref(petImage).getDownloadURL();
+      return { id: petId, imgUrl: imageUrl };
+    } catch (error) {
+      console.error('Error fetching pet image from storage:', error);
+      // Handle the error, maybe set an error state or log it
+      return null; // Or some default value indicating an error
+    }
   }
 
   return (
@@ -85,21 +165,36 @@ const Orders = ({navigation}) => {
         <View style={styles.container2}>
           <Text style={styles.header}>Orders</Text>
         </View>
+        <Categories
+              selectedItem={selectedCategory}
+              onItemPressed={setSelectedCategory}
+              data={[...categoriesData]}
+            />
         <FlatList
           data={data}
-          numColumns={2}
+          numColumns={1}
           style={{flexGrow: 1}}
           keyExtractor={item => String(item?.id)}
-          renderItem={({item}) => (
+          ListEmptyComponent={
+          <View style={{alignItems: 'center'}}>
+            <Text>No item found.</Text>
+          </View>
+          }
+          renderItem={({item, index}) => {
+
+            let petImage =
+            images.length > 1 ? images.find(x => x.id === item.id) : images;
+
+            return (
             <OrderCard
-              icon={{uri: item?.petImage[0]}}
+              icon={petImage ? petImage.imgUrl : null}
               name={item.petName}
               breed={item.petBreed}
               location={item.location}
-              status={item.petStatus}
+              status={item.buyerData.status}
               onPress={() => navigation.navigate('PetOrderDetails', {navigation , item})}
             />
-          )}
+          );}}
         />
       </View>
     </ScrollView>
