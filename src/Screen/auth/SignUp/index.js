@@ -9,9 +9,11 @@ import Input from '../../../Component/Input';
 import auth from '@react-native-firebase/auth';
 import { ScrollView } from 'react-native-gesture-handler';
 import firestore from '@react-native-firebase/firestore';
+import CheckBox from '@react-native-community/checkbox';
 
 const SignUp = ({navigation}) => {
 
+  const [toggleCheckbox, setToggleCheckBox] = useState(false);
   const [values, setValues] = useState({
     full_name: '',
     email: '',
@@ -164,6 +166,20 @@ const SignUp = ({navigation}) => {
                 <Input onChangeText={(val) => onChange(val, 'password')}  placeholder={'Password'} style={{marginTop: 10}} hideInput={true} />
                 <Input onChangeText={(val) => onChange(val, 'confirm_password')}  placeholder={'Confirm Password'} style={{marginTop: 10}} hideInput={true} />
 
+                <View style={styles.buttonHolder}>
+                  <View style={styles.rememberMeHolder}>
+                    <CheckBox
+                      style={styles.checkbox}
+                      value={toggleCheckbox}
+                      onValueChange={(newValue) => setToggleCheckBox(newValue)}
+                    />
+                    <Text style={styles.detailText}>I have read and agree to the</Text>
+                    <Text style={styles.forgotPassText}>Terms & Conditions</Text>
+                  </View>
+                  <TouchableOpacity onPress={() => navigation.navigate('ResetPassword', {navigation})}>
+                    <Text style={styles.forgotPassText} />
+                  </TouchableOpacity>
+                </View>
                 <Button onPress={onSignUp} title={'Sign Up'} withBorder={true}/>
 
                 <Text style={styles.error}>{errorMessage}</Text>

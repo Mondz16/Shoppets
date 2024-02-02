@@ -161,7 +161,6 @@ const PetDetails = ({navigation, route}) => {
        />
       <MedicalModal
       title={'Medical Record'}
-      verifiedText={item.petVaccinationStatus}
       vaccination={item.petVaccination}
       description={'The Pet has been added to your orders!'}
       visible={medicalModalVisible}

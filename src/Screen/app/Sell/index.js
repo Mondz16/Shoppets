@@ -234,8 +234,7 @@ const Sell = ({navigation}) => {
         keyExtractor={item => String(item?.id)}
         renderItem={({item, index}) => {
           console.log('Images >>', images);
-          let petImage = images.length > 1 ? images.find(x => x.id !== null && x.id === item.id && item.id !== null) : images;
-
+          let petImage = images.length > 1 ? images.find(x => x.id !== null && x.id === item.id && item.id !== null) : images[0];
           let navigateDirectory =
             item.petStatus === 'Available'
               ? 'SellerPetDetails'

@@ -150,28 +150,6 @@ const AddToStore = ({navigation, route}) => {
   }
 
   async function getFirestoreData() {
-    const id = user.uid;
-    const petData = await firestore()
-      .collection('PetCollection')
-      .doc('UserData')
-      .collection(id)
-      .doc('Content')
-      .get();
-
-    if (petData !== undefined) {
-      if (petData.data().contentData !== undefined) {
-        console.log('Check Content Data: defined>>');
-        {
-          updateFirestoreData(petData.data().contentData);
-        }
-      } else {
-        console.log('Check Content Data: undefined>>');
-        setFirestoreData();
-      }
-    } else {
-      console.log('Check Content Data: undefined>> 2');
-      setFirestoreData();
-    }
 
     const overallData = await firestore()
       .collection('PetCollection')
@@ -453,6 +431,7 @@ const AddToStore = ({navigation, route}) => {
         visible={purchaseModalVisible}
         onRequestClose={() => {
           setPurchaseModalVisible(!purchaseModalVisible);
+          navigation.goBack();
         }}
       />
       <InternetStatusModal isVisible={!connectionStatus} />

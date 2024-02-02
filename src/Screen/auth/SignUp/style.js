@@ -30,6 +30,20 @@ const styles = StyleSheet.create({
     marginBottom: 100,
     marginTop: 20,
   },
+  buttonHolder:{
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+  },
+  rememberMeHolder:{
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  checkbox:{
+    width: 18,
+    height: 18,
+  },
   image: {
     width: 200,
     height: 200,
@@ -56,18 +70,25 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 5,
+    marginTop: 0,
+    marginBottom: -20,
   },
   login:{
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  forgotPassText: {
-    color: colors.blue,
+  detailText:{
+    color: colors.darkGrey2,
     marginLeft: 15,
     marginVertical: 10,
     fontSize: 12,
+  },
+  forgotPassText: {
+    color: colors.blue,
+    marginVertical: 10,
+    fontSize: 12,
+    marginLeft: 3,
   },
   signUpText: {
     color: colors.blue,

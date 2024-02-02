@@ -33,6 +33,7 @@ LogBox.ignoreAllLogs(); //Ignore all log notifications
 const PetOrderDetails = ({navigation, route}) => {
   const {item} = route?.params || {};
 
+  const [sellerData, setSellerData] = useState();
   const [connectionStatus, setConnectionStatus] = useState(true);
   const [cancelModalVisible, setCancelModalVisible] = useState(false);
   const [userData, setUserData] = useState({});
@@ -112,6 +113,7 @@ const PetOrderDetails = ({navigation, route}) => {
     }
 
     getFirebaseData();
+    getFirestoreSenderData();
   }, []);
 
   useEffect(() => {
@@ -207,6 +209,19 @@ const PetOrderDetails = ({navigation, route}) => {
         console.log('Order Details : Updated User Data >>', existingData);
         setUserData(existingData);
       });
+  }
+
+  async function getFirestoreSenderData() {
+    await firestore()
+    .collection('PetCollection')
+    .doc('UserData')
+    .collection(item.sellerId)
+    .doc('Info').onSnapshot(cart => {
+      if (cart.data() !== undefined && cart.data().infoData !== null  && cart.data().infoData !== undefined){
+        let jsonObj = JSON.parse(cart.data().infoData);
+        setSellerData(jsonObj);
+      }
+    });
   }
 
   async function UpdatePetDataInfo() {
@@ -401,6 +416,11 @@ const PetOrderDetails = ({navigation, route}) => {
                 title={'Contact Seller'}
                 withBorder={true}
                 clickable={true}
+                onPress={() => navigation.navigate('Chat', {
+                  sellerId: item.sellerId,
+                  sellerData: sellerData,
+                  navigation: navigation,
+                })}
               />
             </>
           ) : (

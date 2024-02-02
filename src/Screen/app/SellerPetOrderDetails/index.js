@@ -340,7 +340,7 @@ const SellerPetOrderDetails = ({navigation, route}) => {
             },
           ]}>
           <Text style={styles.paymentDetails}>Payment Status</Text>
-          <Text style={styles.statusLabel}>{Number(item.buyerData.payment) === 0 ? 'Unpaid' : (Number(item.buyerData.payment) === Number(item.price) + 120 ? ('Fully Paid') : ('Partially Paid'))}</Text>
+          <Text style={styles.statusLabel}>Fully Paid</Text>
 
         </View>
         <View>
@@ -355,11 +355,11 @@ const SellerPetOrderDetails = ({navigation, route}) => {
           </View>
           <View style={styles.statusHolder}>
             <Text style={styles.statusLabel}>Paid Amount:</Text>
-            <Text style={styles.status}>(P {Number(item.buyerData.payment)}.00)</Text>
+            <Text style={styles.status}>(P {(Number(item.price) + 120)}.00)</Text>
           </View>
           <View style={styles.statusHolder}>
             <Text style={styles.statusLabel}>Total Payment:</Text>
-            <Text style={styles.status}>P {(Number(item.price) + 120) - Number(item.buyerData.payment)}.00</Text>
+            <Text style={styles.status}>P 0.00</Text>
           </View>
         </View>
       </View>
